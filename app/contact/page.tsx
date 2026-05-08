@@ -1,5 +1,9 @@
+"use client";
+
 import ContactForm from "@/components/ContactForm";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -17,43 +21,30 @@ function XIcon({ className }: { className?: string }) {
   );
 }
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Address",
-    lines: ["Jl. Kemang Raya No. 12", "Kemang, Jakarta Selatan 12730"],
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    lines: ["+62 21 7890 1234", "+62 812 3456 7890 (WhatsApp)"],
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    lines: ["hello@aromaco.id", "events@aromaco.id"],
-  },
-  {
-    icon: Clock,
-    title: "Opening Hours",
-    lines: ["Mon – Fri: 7:00 AM – 10:00 PM", "Sat – Sun: 8:00 AM – 11:00 PM"],
-  },
-];
 
 export default function ContactPage() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].contactPage;
+
+  const contactInfo = [
+    { icon: MapPin, title: tr.addressTitle, lines: ["Jl. Kemang Raya No. 12", "Kemang, Jakarta Selatan 12730"] },
+    { icon: Phone, title: tr.phoneTitle, lines: ["+62 21 7890 1234", "+62 812 3456 7890 (WhatsApp)"] },
+    { icon: Mail, title: tr.emailTitle, lines: ["hello@aromaco.id", "events@aromaco.id"] },
+    { icon: Clock, title: tr.hoursTitle, lines: tr.hours },
+  ];
+
   return (
     <>
       {/* Header */}
       <div className="pt-32 pb-16 bg-stone-900 dark:bg-stone-950 text-center px-4">
         <p className="text-amber-400 font-medium tracking-[0.25em] uppercase text-sm mb-3">
-          Get in Touch
+          {tr.eyebrow}
         </p>
         <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white mb-4">
-          Contact Us
+          {tr.title}
         </h1>
         <p className="text-stone-400 text-lg max-w-lg mx-auto leading-relaxed">
-          Questions, reservations, event inquiries — we&apos;d love to hear from
-          you.
+          {tr.sub}
         </p>
       </div>
 
@@ -65,11 +56,10 @@ export default function ContactPage() {
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <h2 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-                  We&apos;re Always Happy to Chat
+                  {tr.infoTitle}
                 </h2>
                 <p className="text-stone-500 dark:text-stone-400 leading-relaxed">
-                    Pop in for a coffee, give us a call, or fill out the form and
-                    we&apos;ll get back to you within 24 hours.
+                  {tr.infoSub}
                 </p>
               </div>
 
@@ -99,7 +89,7 @@ export default function ContactPage() {
               {/* Social */}
               <div>
                 <p className="text-stone-700 dark:text-stone-300 font-semibold text-sm mb-3">
-                  Follow us
+                  {tr.followUs}
                 </p>
                 <div className="flex gap-3">
                   {[
@@ -135,9 +125,9 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="font-bold text-lg leading-tight">Reservasi via WhatsApp</p>
+                  <p className="font-bold text-lg leading-tight">{tr.chatCardTitle}</p>
                   <p className="text-white/80 text-sm mt-1">
-                    Chat langsung dengan kami untuk booking meja, acara private, atau pertanyaan lainnya.
+                    {tr.chatCardSub}
                   </p>
                 </div>
                 <svg className="w-5 h-5 shrink-0 opacity-70 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -148,7 +138,7 @@ export default function ContactPage() {
               {/* Contact form */}
               <div className="bg-white dark:bg-stone-900 rounded-2xl shadow-sm p-8 border border-stone-100 dark:border-stone-800">
                 <h2 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mb-6">
-                  Send Us a Message
+                  {tr.formTitle}
                 </h2>
                 <ContactForm />
               </div>
@@ -161,8 +151,8 @@ export default function ContactPage() {
       <section className="h-72 bg-stone-200 dark:bg-stone-800 relative overflow-hidden">
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-stone-500 dark:text-stone-400">
           <MapPin className="w-10 h-10 text-amber-600" />
-          <p className="font-medium">Jl. Kemang Raya No. 12, Jakarta Selatan</p>
-          <p className="text-sm">Interactive map would be embedded here</p>
+          <p className="font-medium">{tr.mapAddress}</p>
+          <p className="text-sm">{tr.mapPlaceholder}</p>
         </div>
         {/* Grid pattern overlay */}
         <div

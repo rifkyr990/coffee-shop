@@ -1,30 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Leaf, Award, Heart, ArrowRight } from "lucide-react";
 import FadeIn from "./FadeIn";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
-const pillars = [
-  {
-    icon: Leaf,
-    title: "Ethically Sourced",
-    description:
-      "We work directly with small-batch farmers across Ethiopia, Colombia, and Sumatra.",
-  },
-  {
-    icon: Award,
-    title: "Expert Roasting",
-    description:
-      "Our head roaster has 12 years of experience perfecting single-origin profiles.",
-  },
-  {
-    icon: Heart,
-    title: "Made with Love",
-    description:
-      "Every drink is crafted with intention, from grind size to pour temperature.",
-  },
-];
+const pillarIcons = [Leaf, Award, Heart];
 
 export default function AboutSection() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].aboutSection;
+  const pillars = tr.pillars.map((p, i) => ({ ...p, icon: pillarIcons[i] }));
+
   return (
     <section className="py-24 lg:py-32 bg-white dark:bg-stone-900 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,8 +31,8 @@ export default function AboutSection() {
             </div>
             {/* Floating badge */}
             <div className="absolute -bottom-6 -right-4 sm:right-8 bg-amber-700 text-white px-6 py-4 rounded-2xl shadow-xl">
-              <div className="font-serif text-3xl font-bold">5+</div>
-              <div className="text-amber-200 text-sm">Years of Excellence</div>
+              <div className="font-serif text-3xl font-bold">{tr.badgeYears}</div>
+              <div className="text-amber-200 text-sm">{tr.badgeLabel}</div>
             </div>
             {/* Accent blob */}
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-amber-100 dark:bg-amber-950/40 rounded-full -z-10" />
@@ -52,22 +41,18 @@ export default function AboutSection() {
           {/* Text side */}
           <FadeIn direction="right" className="order-1 lg:order-2">
             <p className="text-amber-700 dark:text-amber-500 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-              Our Story
+              {tr.sectionLabel}
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight mb-6">
-              More Than Coffee,
+              {tr.headline1}
               <br />
-              It&apos;s a Culture
+              {tr.headline2}
             </h2>
             <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed mb-6">
-              AromaCo. was born from a simple dream: to create a space where
-              exceptional coffee meets genuine hospitality. We believe every cup
-              is a ritual — a moment of pause in a fast world.
+              {tr.body1}
             </p>
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed mb-10">
-              Since 2020, we&apos;ve been sourcing the finest single-origin beans,
-              roasting in small batches, and training our baristas to treat every
-              pour as a craft. Come as a customer. Leave as family.
+              {tr.body2}
             </p>
 
             {/* Pillars */}
@@ -93,7 +78,7 @@ export default function AboutSection() {
               href="/about"
               className="inline-flex items-center gap-2 text-amber-700 dark:text-amber-500 font-semibold hover:gap-3 transition-all duration-200 group"
             >
-              Learn our full story
+              {tr.link}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </FadeIn>

@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { X, Sparkles } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 const PROMO_KEY = "aroma-promo-dismissed-v1";
 
-const promos = [
-  "🎉 Happy Hour 2–5 PM — Semua minuman diskon 20%!",
-  "☕ Buy 2 Get 1 Free setiap hari Senin. Berlaku untuk semua espresso.",
-  "🍰 Basque Cheesecake baru tersedia — terbatas setiap hari!",
-];
-
 export default function PromoBanner() {
   const [visible, setVisible] = useState(false);
-  const [promo] = useState(() => promos[Math.floor(Math.random() * promos.length)]);
+  const [promoIndex] = useState(() => Math.floor(Math.random() * 3));
+  const { lang } = useLanguage();
+  const promos = translations[lang].promoBanner;
+  const promo = promos[promoIndex];
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(PROMO_KEY);

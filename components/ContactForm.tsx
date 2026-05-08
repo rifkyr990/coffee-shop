@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Send, CheckCircle, Loader } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 type FormData = {
   name: string;
@@ -9,15 +11,6 @@ type FormData = {
   subject: string;
   message: string;
 };
-
-const subjectOptions = [
-  "Table Reservation",
-  "Event & Private Hire",
-  "Catering Inquiry",
-  "Wholesale & Beans",
-  "General Feedback",
-  "Other",
-];
 
 export default function ContactForm() {
   const [form, setForm] = useState<FormData>({
@@ -28,6 +21,8 @@ export default function ContactForm() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const { lang } = useLanguage();
+  const tr = translations[lang].contactForm;
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -53,10 +48,10 @@ export default function ContactForm() {
           <CheckCircle className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
         </div>
         <h3 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-          Message Sent!
+          {tr.successTitle}
         </h3>
         <p className="text-stone-500 dark:text-stone-400 max-w-sm">
-          Thanks for reaching out. We&apos;ll get back to you within 24 hours.
+          {tr.successBody}
         </p>
         <button
           onClick={() => {
@@ -65,7 +60,7 @@ export default function ContactForm() {
           }}
           className="mt-6 text-amber-700 dark:text-amber-500 font-medium hover:underline"
         >
-          Send another message
+          {tr.sendAnother}
         </button>
       </div>
     );
@@ -80,7 +75,7 @@ export default function ContactForm() {
             htmlFor="name"
             className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5"
           >
-            Full Name <span className="text-amber-600">*</span>
+            {tr.nameLbl} <span className="text-amber-600">*</span>
           </label>
           <input
             id="name"
@@ -89,7 +84,7 @@ export default function ContactForm() {
             required
             value={form.name}
             onChange={handleChange}
-            placeholder="Your full name"
+            placeholder={tr.namePlaceholder}
             className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all text-sm"
           />
         </div>
@@ -100,7 +95,7 @@ export default function ContactForm() {
             htmlFor="email"
             className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5"
           >
-            Email Address <span className="text-amber-600">*</span>
+            {tr.emailLbl} <span className="text-amber-600">*</span>
           </label>
           <input
             id="email"
@@ -121,7 +116,7 @@ export default function ContactForm() {
           htmlFor="subject"
           className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5"
         >
-          Subject
+          {tr.subjectLbl}
         </label>
         <select
           id="subject"
@@ -130,8 +125,8 @@ export default function ContactForm() {
           onChange={handleChange}
           className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all text-sm appearance-none cursor-pointer"
         >
-          <option value="">Select a subject...</option>
-          {subjectOptions.map((opt) => (
+          <option value="">{tr.subjectPlaceholder}</option>
+          {tr.subjects.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
             </option>
@@ -145,7 +140,7 @@ export default function ContactForm() {
           htmlFor="message"
           className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5"
         >
-          Message <span className="text-amber-600">*</span>
+            {tr.msgLbl} <span className="text-amber-600">*</span>
         </label>
         <textarea
           id="message"
@@ -154,7 +149,7 @@ export default function ContactForm() {
           rows={5}
           value={form.message}
           onChange={handleChange}
-          placeholder="Tell us how we can help..."
+          placeholder={tr.msgPlaceholder}
           className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all text-sm resize-none"
         />
       </div>
@@ -168,12 +163,12 @@ export default function ContactForm() {
         {loading ? (
           <>
             <Loader className="w-4 h-4 animate-spin" />
-            Sending...
+            {tr.sending}
           </>
         ) : (
           <>
             <Send className="w-4 h-4" />
-            Send Message
+            {tr.send}
           </>
         )}
       </button>
