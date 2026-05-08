@@ -4,19 +4,24 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { galleryImages } from "@/lib/data";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 function Lightbox({
   index,
   onClose,
   onPrev,
   onNext,
+  lang,
 }: {
   index: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  lang: "id" | "en";
 }) {
   const img = galleryImages[index];
+  const tr = translations[lang].gallery;
 
   // Keyboard navigation
   useEffect(() => {
@@ -41,12 +46,12 @@ function Lightbox({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={img.alt}
+      aria-label={img.alt[lang]}
     >
       {/* Close */}
       <button
         onClick={onClose}
-        aria-label="Tutup"
+        aria-label={tr.close}
         className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
       >
         <X className="w-5 h-5" />
@@ -55,7 +60,7 @@ function Lightbox({
       {/* Prev */}
       <button
         onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        aria-label="Sebelumnya"
+        aria-label={tr.prev}
         className="absolute left-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
       >
         <ChevronLeft className="w-6 h-6" />
@@ -70,7 +75,7 @@ function Lightbox({
         <Image
           key={img.id}
           src={img.src}
-          alt={img.alt}
+          alt={img.alt[lang]}
           fill
           className="object-cover animate-fade-in-up"
           sizes="(max-width: 1024px) 100vw, 896px"
@@ -78,7 +83,7 @@ function Lightbox({
         />
         {/* Caption */}
         <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent px-6 py-4">
-          <p className="text-white text-sm font-medium">{img.alt}</p>
+          <p className="text-white text-sm font-medium">{img.alt[lang]}</p>
           <p className="text-white/50 text-xs mt-0.5">
             {index + 1} / {galleryImages.length}
           </p>
@@ -88,7 +93,7 @@ function Lightbox({
       {/* Next */}
       <button
         onClick={(e) => { e.stopPropagation(); onNext(); }}
-        aria-label="Berikutnya"
+        aria-label={tr.next}
         className="absolute right-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
       >
         <ChevronRight className="w-6 h-6" />
@@ -111,6 +116,8 @@ function Lightbox({
 
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { lang } = useLanguage();
+  const tr = translations[lang].gallery;
 
   const close = useCallback(() => setActiveIndex(null), []);
   const prev = useCallback(() =>
@@ -127,10 +134,10 @@ export default function Gallery() {
           {/* Header */}
           <div className="text-center max-w-xl mx-auto mb-16">
             <p className="text-amber-700 dark:text-amber-500 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-              The Experience
+              {tr.sectionLabel}
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight">
-              A Feast for the Eyes
+              {tr.headline}
             </h2>
           </div>
 
@@ -140,12 +147,12 @@ export default function Gallery() {
               <button
                 key={img.id}
                 onClick={() => setActiveIndex(i)}
-                aria-label={`Buka foto: ${img.alt}`}
+                aria-label={`${tr.openPhoto}: ${img.alt[lang]}`}
                 className={`relative overflow-hidden rounded-2xl group cursor-zoom-in text-left ${img.span ?? ""}`}
               >
                 <Image
                   src={img.src}
-                  alt={img.alt}
+                  alt={img.alt[lang]}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
@@ -159,7 +166,7 @@ export default function Gallery() {
                 </div>
                 <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="text-white text-sm font-medium tracking-wide bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                    {img.alt}
+                    {img.alt[lang]}
                   </span>
                 </div>
               </button>
@@ -175,6 +182,7 @@ export default function Gallery() {
           onClose={close}
           onPrev={prev}
           onNext={next}
+          lang={lang}
         />
       )}
     </>

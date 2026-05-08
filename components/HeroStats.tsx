@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 type Stat = {
   target: number;
@@ -8,12 +10,6 @@ type Stat = {
   suffix: string;
   label: string;
 };
-
-const stats: Stat[] = [
-  { target: 50, suffix: "+", label: "Coffee Origins" },
-  { target: 15, suffix: "K+", label: "Happy Guests" },
-  { target: 4.9, decimals: 1, suffix: "★", label: "Average Rating" },
-];
 
 function useCountUp(target: number, decimals = 0, active: boolean) {
   const [count, setCount] = useState(0);
@@ -58,6 +54,14 @@ function Counter({ stat, active }: { stat: Stat; active: boolean }) {
 export default function HeroStats() {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  const { lang } = useLanguage();
+  const tr = translations[lang].heroStats;
+
+  const stats: Stat[] = [
+    { target: 50, suffix: "+", label: tr.origins },
+    { target: 15, suffix: "K+", label: tr.guests },
+    { target: 4.9, decimals: 1, suffix: "★", label: tr.rating },
+  ];
 
   useEffect(() => {
     const el = ref.current;

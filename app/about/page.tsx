@@ -1,87 +1,44 @@
+"use client";
+
 import Image from "next/image";
-import { Award, Users, Leaf, Globe, Coffee, Star } from "lucide-react";
+import { Award, Users, Leaf, Globe, Star } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+import { translations } from "@/lib/i18n";
 
-const values = [
-  {
-    icon: Leaf,
-    title: "Sustainable Sourcing",
-    description:
-      "We partner directly with certified-organic farms and pay above fair trade prices, ensuring ethical supply chains and sustainable practices at origin.",
-  },
-  {
-    icon: Award,
-    title: "Craft Excellence",
-    description:
-      "Our roasting team cupp hundreds of lots each season. Only those scoring above 80 SCA points earn a place on our menu.",
-  },
-  {
-    icon: Users,
-    title: "Community First",
-    description:
-      "We host monthly cupping events, brewing workshops, and support local artists by regularly featuring their work in our space.",
-  },
-  {
-    icon: Globe,
-    title: "Global Origins",
-    description:
-      "We rotate single-origin beans from Ethiopia, Colombia, Rwanda, Guatemala, and Sumatra across our seasonal menu.",
-  },
-];
+const valueIcons = [Leaf, Award, Users, Globe];
 
-const team = [
+const teamImages = [
   {
     name: "Dian Hartono",
-    role: "Head Barista & Co-founder",
-    bio: "Former SCA World Barista Championship semi-finalist with 10 years in specialty coffee across Jakarta and Singapore.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80",
   },
   {
     name: "Maya Kusuma",
-    role: "Head Roaster",
-    bio: "Trained at Square Mile Coffee in London, Maya leads our sourcing trips and develops every roast profile from her custom drum roaster.",
-    image:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b39c?w=300&q=80",
+    image: "https://images.unsplash.com/photo-1494790108755-2616b612b39c?w=300&q=80",
   },
   {
     name: "Andi Maulana",
-    role: "Executive Chef",
-    bio: "Andi's background in French patisserie informs our food menu — where every item is made fresh in-house from whole ingredients.",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80",
   },
 ];
 
-const milestones = [
-  {
-    year: "2020",
-    event: "AromaCo. opens its first 45-seat location in Kemang, Jakarta.",
-  },
-  {
-    year: "2021",
-    event: "Named Best New Café by Jakarta Food Magazine. 10,000 cups served.",
-  },
-  {
-    year: "2022",
-    event: "Launched our direct-trade relationship with two Ethiopian farms.",
-  },
-  {
-    year: "2023",
-    event:
-      "Expanded to a second location in SCBD and launched retail bean subscriptions.",
-  },
-  {
-    year: "2024",
-    event: "Hosted 50+ community events, brewing workshops, and art pop-ups.",
-  },
-  {
-    year: "2025",
-    event:
-      "AromaCo. Roastery opens — a dedicated production space and coffee lab.",
-  },
-];
+const milestoneYears = ["2020", "2021", "2022", "2023", "2024", "2025"];
 
 export default function AboutPage() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].aboutPage;
+
+  const values = tr.values.map((v, i) => ({ ...v, icon: valueIcons[i] }));
+  const team = teamImages.map((t, i) => ({
+    ...t,
+    role: tr.teamRoles[i],
+    bio: tr.teamBios[i],
+  }));
+  const milestones = milestoneYears.map((year, i) => ({
+    year,
+    event: tr.milestones[i],
+  }));
+
   return (
     <>
       {/* Hero */}
@@ -98,10 +55,10 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-linear-to-b from-stone-950/50 to-stone-950/70" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <p className="text-amber-400 font-medium tracking-[0.25em] uppercase text-sm mb-3">
-              Who We Are
+              {tr.heroLabel}
             </p>
             <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white leading-tight">
-              Our Story
+              {tr.heroTitle}
             </h1>
           </div>
         </div>
@@ -111,18 +68,13 @@ export default function AboutPage() {
       <section className="py-24 bg-white dark:bg-stone-900">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-6">
-            Born from a Love of the Perfect Cup
+            {tr.introTitle}
           </h2>
           <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed mb-5">
-            It started with a question: why is truly great coffee only accessible
-            to those who know where to look? AromaCo. was founded in 2020 by two
-            friends — a barista champion and a chef — to answer that question
-            with a simple, beautiful café.
+            {tr.intro1}
           </p>
           <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed">
-            We believe great coffee is a story — of farmers, soil, weather, craft
-            and care. Our job is to honour every chapter of that story in the cup
-            we hand you.
+            {tr.intro2}
           </p>
         </div>
       </section>
@@ -132,10 +84,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-amber-700 dark:text-amber-500 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-              What We Stand For
+              {tr.valuesLabel}
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">
-              Our Guiding Values
+              {tr.valuesTitle}
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -164,10 +116,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-amber-700 dark:text-amber-500 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-              The People
+              {tr.teamLabel}
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">
-              Meet the Team
+              {tr.teamTitle}
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
@@ -202,10 +154,10 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-amber-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-              Our Journey
+              {tr.timelineLabel}
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
-              Milestones
+              {tr.timelineTitle}
             </h2>
           </div>
           <div className="relative">
@@ -240,13 +192,7 @@ export default function AboutPage() {
       <div className="bg-stone-100 dark:bg-stone-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-6 items-center justify-center">
-            {[
-              "Best New Café 2021",
-              "4.9 ★ Google Rating",
-              "SCA Member",
-              "Fair Trade Certified",
-              "Top 10 Jakarta Cafés 2023",
-            ].map((award) => (
+            {tr.awards.map((award) => (
               <div
                 key={award}
                 className="flex items-center gap-2 text-stone-600 dark:text-stone-400 text-sm font-medium"

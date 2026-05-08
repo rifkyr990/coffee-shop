@@ -1,8 +1,15 @@
+"use client";
+
 import { Star, Quote } from "lucide-react";
 import { testimonials } from "@/lib/data";
 import FadeIn from "./FadeIn";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 export default function Testimonials() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].testimonials;
+
   return (
     <section className="py-24 lg:py-32 bg-amber-950 dark:bg-stone-950 relative overflow-hidden">
       {/* Background texture */}
@@ -20,10 +27,10 @@ export default function Testimonials() {
         {/* Header */}
         <FadeIn className="text-center max-w-xl mx-auto mb-16">
           <p className="text-amber-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-            What People Say
+            {tr.sectionLabel}
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white leading-tight">
-            Loved by Coffee Lovers
+            {tr.headline}
           </h2>
         </FadeIn>
         {/* Cards Grid */}
@@ -48,7 +55,7 @@ export default function Testimonials() {
 
               {/* Text */}
               <p className="text-stone-300 leading-relaxed mb-6 text-[15px]">
-                &ldquo;{t.text}&rdquo;
+                &ldquo;{t.text[lang]}&rdquo;
               </p>
 
               {/* Author */}

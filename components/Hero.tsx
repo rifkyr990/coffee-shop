@@ -1,9 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Star } from "lucide-react";
 import HeroStats from "./HeroStats";
 import HeroBackground from "./HeroBackground";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 export default function Hero() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].hero;
+
   return (
     <section className="relative h-screen min-h-[680px] flex items-center justify-center overflow-hidden">
       {/* Background Image — parallax handled client-side */}
@@ -19,24 +26,22 @@ export default function Hero() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 backdrop-blur-sm mb-6 animate-fade-in-up">
           <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
           <span className="text-amber-300 text-xs font-medium tracking-[0.2em] uppercase">
-            Est. 2020 · Specialty Coffee
+            {tr.eyebrow}
           </span>
         </div>
 
         {/* Headline */}
         <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-[1.1] mb-6 animate-fade-in-up animate-delay-100">
-          Where Every Cup
+          {tr.headline1}
           <br />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-amber-300">
-            Tells a Story
+            {tr.headline2}
           </span>
         </h1>
 
         {/* Sub */}
         <p className="text-stone-300/90 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up animate-delay-200">
-          Discover the art of specialty coffee in the heart of the city.
-          <br className="hidden sm:block" />
-          Crafted with passion, served with love.
+          {tr.sub}
         </p>
 
         {/* CTA Buttons */}
@@ -45,14 +50,14 @@ export default function Hero() {
             href="/menu"
             className="inline-flex items-center justify-center gap-2 bg-amber-700 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold tracking-wide transition-all duration-300 hover:shadow-xl hover:shadow-amber-700/30 hover:-translate-y-0.5"
           >
-            Explore Our Menu
+            {tr.btnMenu}
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/about"
             className="inline-flex items-center justify-center gap-2 border border-white/40 hover:border-white/80 text-white px-8 py-4 rounded-full font-semibold tracking-wide transition-all duration-300 backdrop-blur-sm hover:bg-white/10 hover:-translate-y-0.5"
           >
-            Our Story
+            {tr.btnAbout}
           </Link>
         </div>
 
@@ -63,7 +68,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <span className="text-white/40 text-xs tracking-[0.2em] uppercase">
-          Scroll
+          {tr.scroll}
         </span>
         <div className="w-px h-10 bg-linear-to-b from-white/40 to-transparent" />
       </div>

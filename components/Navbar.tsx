@@ -5,19 +5,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Coffee, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/menu", label: "Menu" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
+const navHrefs = ["/", "/menu", "/about", "/contact"] as const;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { lang, setLang } = useLanguage();
+  const tr = translations[lang];
   const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/", label: tr.nav.home },
+    { href: "/menu", label: tr.nav.menu },
+    { href: "/about", label: tr.nav.about },
+    { href: "/contact", label: tr.nav.contact },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -87,6 +93,38 @@ export default function Navbar() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-1">
+            {/* Language toggle */}
+            <div className={`hidden md:flex items-center text-xs font-bold tracking-wider rounded-full overflow-hidden border transition-colors ${
+              scrolled || theme === "dark"
+                ? "border-stone-300 dark:border-stone-700"
+                : "border-white/40"
+            }`}>
+              <button
+                onClick={() => setLang("id")}
+                className={`px-2.5 py-1 transition-colors ${
+                  lang === "id"
+                    ? "bg-amber-700 text-white"
+                    : scrolled || theme === "dark"
+                    ? "text-stone-500 dark:text-stone-400 hover:text-amber-700"
+                    : "text-white/70 hover:text-white"
+                }`}
+              >
+                ID
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`px-2.5 py-1 transition-colors ${
+                  lang === "en"
+                    ? "bg-amber-700 text-white"
+                    : scrolled || theme === "dark"
+                    ? "text-stone-500 dark:text-stone-400 hover:text-amber-700"
+                    : "text-white/70 hover:text-white"
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
             {/* Dark mode toggle */}
             <button
               onClick={toggleTheme}
@@ -111,7 +149,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="hidden md:inline-flex items-center gap-1.5 ml-2 px-5 py-2 rounded-full bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold tracking-wide transition-all duration-200 hover:shadow-lg hover:shadow-amber-700/25 hover:-translate-y-px"
             >
-              Reserve a Table
+              {lang === "id" ? "Reservasi" : "Reserve"}
             </a>
 
             {/* Mobile hamburger — hidden now that we have bottom nav */}
@@ -142,6 +180,16 @@ export default function Navbar() {
               </Link>
             );
           })}
+          {/* Mobile lang toggle */}
+          <div className="flex items-center gap-2 px-4 pt-2">
+            <span className="text-xs text-stone-400">Lang:</span>
+            <button onClick={() => setLang("id")} className={`text-xs font-bold px-2.5 py-1 rounded-full transition-colors ${lang === "id" ? "bg-amber-700 text-white" : "text-stone-500 hover:text-amber-700"}` }>
+              ID
+            </button>
+            <button onClick={() => setLang("en")} className={`text-xs font-bold px-2.5 py-1 rounded-full transition-colors ${lang === "en" ? "bg-amber-700 text-white" : "text-stone-500 hover:text-amber-700"}` }>
+              EN
+            </button>
+          </div>
           <div className="pt-2 px-4">
             <a
               href="https://wa.me/6281234567890?text=Halo%20AromaCo.%2C%20saya%20ingin%20reservasi%20meja"
@@ -149,7 +197,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="block w-full text-center py-3 rounded-full bg-amber-700 hover:bg-amber-600 text-white font-semibold tracking-wide transition-colors"
             >
-              Reserve a Table
+              {lang === "id" ? "Reservasi Meja" : "Reserve a Table"}
             </a>
           </div>
         </div>

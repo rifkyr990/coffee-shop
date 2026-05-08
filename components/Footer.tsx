@@ -1,17 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Coffee, MapPin, Phone, Mail, Clock } from "lucide-react";
-
-const footerLinks = {
-  explore: [
-    { href: "/menu", label: "Our Menu" },
-    { href: "/about", label: "About Us" },
-    { href: "/contact", label: "Contact" },
-  ],
-  info: [
-    { label: "Mon – Fri: 7:00 AM – 10:00 PM" },
-    { label: "Sat – Sun: 8:00 AM – 11:00 PM" },
-  ],
-};
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/lib/i18n";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -35,6 +27,11 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { lang } = useLanguage();
+  const tr = translations[lang].footer;
+  const year = new Date().getFullYear();
+
+
   return (
     <footer className="bg-stone-900 dark:bg-stone-950 text-stone-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -50,8 +47,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-stone-400 text-sm leading-relaxed mb-6">
-              Where every cup tells a story. Premium specialty coffee crafted
-              with passion and served with love in the heart of the city.
+              {tr.brandDesc}
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ Icon, href, label }) => (
@@ -70,10 +66,10 @@ export default function Footer() {
           {/* Explore */}
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-5 text-sm uppercase">
-              Explore
+              {tr.exploreTitle}
             </h3>
             <ul className="space-y-3">
-              {footerLinks.explore.map((link) => (
+              {tr.exploreLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -89,13 +85,13 @@ export default function Footer() {
           {/* Hours */}
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-5 text-sm uppercase">
-              Opening Hours
+              {tr.hoursTitle}
             </h3>
             <ul className="space-y-3">
-              {footerLinks.info.map((item, i) => (
+              {tr.hours.map((hour, i) => (
                 <li key={i} className="flex items-start gap-2 text-stone-400 text-sm">
                   <Clock className="w-4 h-4 mt-0.5 text-amber-600 shrink-0" />
-                  {item.label}
+                  {hour}
                 </li>
               ))}
             </ul>
@@ -104,7 +100,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-5 text-sm uppercase">
-              Find Us
+              {tr.findUsTitle}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-stone-400 text-sm">
@@ -128,10 +124,10 @@ export default function Footer() {
       <div className="border-t border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-stone-500 text-xs">
-            © {new Date().getFullYear()} AromaCo. All rights reserved.
+            &copy; {year} AromaCo. {tr.copyrightSuffix}
           </p>
           <p className="text-stone-600 text-xs">
-            Crafted with ♥ for coffee lovers everywhere
+            {tr.credit}
           </p>
         </div>
       </div>

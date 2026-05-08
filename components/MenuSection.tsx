@@ -15,14 +15,14 @@ export default function MenuSection() {
         {/* Header */}
         <FadeIn className="text-center max-w-2xl mx-auto mb-16">
           <p className="text-amber-700 dark:text-amber-500 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-            What We Serve
+            Yang Kami Sajikan
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight mb-4">
-            Crafted for Every Taste
+            Diracik untuk Setiap Selera
           </h2>
           <p className="text-stone-600 dark:text-stone-400 text-lg leading-relaxed">
-            From single-origin espressos to all-day brunch, our menu is
-            designed to delight at every visit.
+            Dari espresso single-origin hingga brunch sepanjang hari, menu kami
+            dirancang untuk memanjakan di setiap kunjungan.
           </p>
         </FadeIn>
 
@@ -39,7 +39,7 @@ export default function MenuSection() {
             href="/menu"
             className="inline-flex items-center gap-2 border-2 border-amber-700 text-amber-700 dark:border-amber-500 dark:text-amber-500 px-8 py-3.5 rounded-full font-semibold tracking-wide hover:bg-amber-700 hover:text-white dark:hover:bg-amber-600 dark:hover:border-amber-600 transition-all duration-200 group"
           >
-            View Full Menu
+            Lihat Menu Lengkap
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

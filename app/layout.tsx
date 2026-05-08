@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
@@ -35,11 +36,12 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="id"
       className={`${inter.variable} ${playfair.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 antialiased transition-colors duration-300">
+        <LanguageProvider>
         <ThemeProvider>
           <PromoBanner />
           <Navbar />
@@ -49,6 +51,7 @@ export default function RootLayout({
           <BackToTop />
           <MobileBottomNav />
         </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
