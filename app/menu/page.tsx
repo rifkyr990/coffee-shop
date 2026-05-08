@@ -75,23 +75,23 @@ export default function MenuPage() {
 
       {/* Sticky Filters */}
       <div className="sticky top-16 lg:top-20 z-30 bg-stone-50/95 dark:bg-stone-950/95 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2.5 ">
           {/* Category filter */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            {categories.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => changeCategory(cat.value)}
-                className={`shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                  activeCategory === cat.value
-                    ? "bg-amber-700 text-white shadow-md shadow-amber-700/25"
-                    : "bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-700"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
+              {categories.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => changeCategory(cat.value)}
+                  className={`shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    activeCategory === cat.value
+                      ? "bg-amber-700 text-white shadow-md shadow-amber-700/25"
+                      : "bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-700"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
 
           {/* Tag filter */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
